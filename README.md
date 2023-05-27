@@ -22,6 +22,6 @@ That’s it now you are ready to upload any supported file or web link and query
 
 For example add web link: https://arxiv.org/pdf/2305.10601.pdf
 
-When it says it’s ready to chat, write your query:
+When it says "All set let's chat now ✔️", write your query:
 
-"Please summarize the content in an easy to explain way"
+For example => "Please summarize the content in an easy to explain way"

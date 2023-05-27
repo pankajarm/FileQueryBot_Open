@@ -27,3 +27,9 @@ For example add web link: https://arxiv.org/pdf/2305.10601.pdf
 When it says "All set let's chat now ✔️", write your query:
 
 For example => "Please summarize the content in an easy to explain way"
+
+## Examples
+### Query/Chat with Technical Documentations
+Here is an example screenshot showing how can you point FileQueryBot to LangChain documentation and start asking questions on it.
+
+![LangChainDoc](https://raw.githubusercontent.com/pankajarm/FileQueryBot_Open/main/example_query_langchain_documentation.jpg)

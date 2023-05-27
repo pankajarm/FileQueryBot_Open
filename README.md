@@ -6,7 +6,7 @@ An Open source version of FileQueryBot. Unleash the power of conversational AI o
 
 ## Installation Instructions:
   1. Star the Repo
-  2. Clone the Repo (private/public doesn’t matter)
+  2. Clone the Repo
   3. SignUp https://streamlit.io/cloudwith with GitHub
   4. Use New App => 
       1. Repository => Your new cloned repo

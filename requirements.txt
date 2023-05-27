@@ -1,0 +1,11 @@
+tabulate
+streamlit
+streamlit-chat
+chromadb
+openai
+langchain
+tiktoken
+unstructured
+pdf2image
+pytesseract
+beautifulsoup4

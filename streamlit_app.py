@@ -70,7 +70,7 @@ if not st.session_state["auth_ok"]:
         submitted = st.form_submit_button("Submit")
         if submitted:
             authenticate(openai_api_key)
-            st.experimental_rerun()
+            st.rerun()
 
 # After authentication is good to go
 # Show file upload and data source inputs
@@ -140,4 +140,4 @@ if st.session_state["auth_ok"]:
         st.session_state["uploaded_file"] = None
         uploaded_file = None
         data_source = None
-        st.experimental_rerun()
+        st.rerun()

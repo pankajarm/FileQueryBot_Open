@@ -4,13 +4,13 @@ import shutil
 import sys
 from typing import List
 
-import openai
+from openai import OpenAI
 import streamlit as st
 
-from langchain.callbacks import get_openai_callback
-from langchain.chains import ConversationalRetrievalChain
-from langchain.chat_models import ChatOpenAI
-from langchain.document_loaders import (
+from langchain_community.callbacks import get_openai_callback
+from langchain_classic.chains import ConversationalRetrievalChain
+from langchain_openai import ChatOpenAI
+from langchain_community.document_loaders import (
     DirectoryLoader,
     TextLoader,
     CSVLoader,
@@ -24,10 +24,11 @@ from langchain.document_loaders import (
     UnstructuredPDFLoader,
     UnstructuredWordDocumentLoader,
 )
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.schema import Document
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Chroma, VectorStore
+from langchain_openai import OpenAIEmbeddings
+from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_chroma import Chroma
+from langchain_core.vectorstores import VectorStore
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 from constants import (
@@ -80,8 +81,8 @@ def authenticate(
     try:
         # Try to access openai and deeplake
         with st.spinner("Authenticating..."):
-            openai.api_key = openai_api_key
-            openai.Model.list()
+            client = OpenAI(api_key=openai_api_key)
+            client.models.list()
     except Exception as e:
         logger.error(f"Authentication failed error: {e}")
         st.session_state["auth_ok"] = False
@@ -228,18 +229,14 @@ def build_chain(
    
     # build ConversationalRetievalChain using model
     vector_store = setup_vector_store(data_source, chunk_size)
-    retriever = vector_store.as_retriever()
-    search_kwargs = {
-        "maximal_marginal_relevance": True,
-        "distance_metric": "cos",
-        "fetch_k": fetch_k,
-        "k": k,
-    }
-    retriever.search_kwargs.update(search_kwargs)
+    retriever = vector_store.as_retriever(
+        search_type="mmr",
+        search_kwargs={"k": k, "fetch_k": fetch_k},
+    )
     model = ChatOpenAI(
-        model_name=MODEL,
+        model=MODEL,
         temperature=temperature,
-        openai_api_key=st.session_state["openai_api_key"],
+        api_key=st.session_state["openai_api_key"],
     )
     chain = ConversationalRetrievalChain.from_llm(
         model,
